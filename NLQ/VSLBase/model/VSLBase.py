@@ -70,7 +70,7 @@ class VSLBase(nn.Module):
         self.cq_attention = CQAttention(dim=configs.dim, drop_rate=configs.drop_rate)
         self.cq_concat = CQConcatenate(dim=configs.dim)
         # query-guided highlighting
-        self.highlight_layer = HighLightLayer(dim=configs.dim)
+        # self.highlight_layer = HighLightLayer(dim=configs.dim)
         # conditioned predictor
         self.predictor = ConditionedPredictor(
             dim=configs.dim,
@@ -126,7 +126,7 @@ class VSLBase(nn.Module):
         query_features = self.feature_encoder(query_features, mask=q_mask)
         video_features = self.feature_encoder(video_features, mask=v_mask)
         features = self.cq_attention(video_features, query_features, v_mask, q_mask)
-        features = self.cq_concat(features, query_features, q_mask)
+        # features = self.cq_concat(features, query_features, q_mask)
         # h_score = self.highlight_layer(features, v_mask)
         # features = features * h_score.unsqueeze(2)
         start_logits, end_logits = self.predictor(features, mask=v_mask)
